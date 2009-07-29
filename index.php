@@ -4,7 +4,9 @@ if ($_REQUEST['action'] == 'send')
 {
 	// Replace YOURAPIKEY with your API key from http://www.qaiku.com/settings/api/
 	$api['qaiku']['get'] = "http://www.qaiku.com/api/statuses/update.xml?apikey=YOURAPIKEY";
-	$api['qaiku']['post'] = "status={status}";
+	$api['qaiku']['post'] = "status={status}&lang={lang}";
+	$api['qaiku']['success']['regex'] = "";
+	$api['qaiku']['success']['okresult'] = "";
 
 	// Just enter your Twitter username and password
 	$api['twitter']['get'] = "http://twitter.com/statuses/update.xml";
@@ -40,9 +42,11 @@ if ($_REQUEST['action'] == 'send')
 	foreach($post_to as $this_api)
 	{
 		$get = str_replace('{status}',$_REQUEST['status'],$api[$this_api]['get']);
+		$get = str_replace('{lang}',$_REQUEST['lang'],$get);
 		if ($api[$this_api]['post'] != null)
 		{
 			$post = str_replace('{status}',$_REQUEST['status'],$api[$this_api]['post']);
+			$post = str_replace('{lang}',$_REQUEST['lang'],$post);
 			//$post = urlencode($post);
 			echo "posting: " . $post;
 		}
