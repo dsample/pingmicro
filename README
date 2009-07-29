@@ -1,0 +1,53 @@
+**************************************************************************
+PingMicro
+Duncan Sample
+http://www.sample.org.uk/blog/
+**************************************************************************
+
+DESCRIPTION
+
+PingMicro is a web-based interface to simplify the process of posting 
+status updates to microblogging sites.  It is designed primarily as a
+simple personal service, which is why it doesn't currently have any login
+system of it's own, so it needs to be put in a secure location with the 
+web server.
+
+It currently uses some deprecated API functionality so that the script is 
+as simple as possible, rather than using OAuth.
+
+FILE LIST
+
+README    - This file
+index.php - The application
+
+REQUIREMENTS
+
+- PHP with the following features:
+  + cURL support
+
+INSTALLATION
+
+1. Copy the script to your web server
+
+Simply copy index.php into the directory of your choice under your web 
+root, you can rename it to whatever you like provided it still has the 
+'.php' extension.  Since this is a simplified script, it doesn't have any
+security mechanisms built in, so it is recommended to place the script
+into a password protected directory.  May hosting providers have a 
+facility within their control panel to password protect a directory,
+otherwise you will need to follow the instructions that are provided for
+your selected web server.  The links below relate to configuring Apache.
+
+http://httpd.apache.org/docs/1.3/howto/htaccess.html
+http://www.addedbytes.com/apache/password-protect-a-directory-with-htaccess/
+
+2. Add account information
+
+Open index.php with your editor of choice and add the relevant account 
+information for the microblogging services you wish to update.  You can
+create multiple instances of any of the services by simply copying the
+lines relating to that service, changing the service name (eg. 
+$api['Qaiku2']) on each line and adding the relevant account details.
+Once you have entered your account information, ensure you uncomment (and
+add any additional services) to the $post_to[] variable.  This variable
+dictates which services are enabled.
