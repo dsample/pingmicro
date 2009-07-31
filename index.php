@@ -5,8 +5,8 @@ if ($_REQUEST['action'] == 'send')
 	// Replace YOURAPIKEY with your API key from http://www.qaiku.com/settings/api/
 	$api['qaiku']['get'] = "http://www.qaiku.com/api/statuses/update.xml?apikey=YOURAPIKEY";
 	$api['qaiku']['post'] = "status={status}&lang={lang}";
-	$api['qaiku']['success']['regex'] = "";
-	$api['qaiku']['success']['okresult'] = "";
+	$api['qaiku']['regex'] = '<(status)>';
+	$api['qaiku']['ok'] = 'status';
 
 	// Just enter your Twitter username and password
 	$api['twitter']['get'] = "http://twitter.com/statuses/update.xml";
@@ -31,6 +31,8 @@ if ($_REQUEST['action'] == 'send')
 	// Replace YOURUSERAPPKEY with your key from http://ping.fm/key/
 	$api['pingfm']['get'] = "http://api.ping.fm/v1/user.post"; 
 	$api['pingfm']['post'] = "api_key=YOURAPIKEY&user_app_key=YOURUSERAPPKEY&post_method=default&body={status}";
+	$api['pingfm']['regex'] = '<rsp status=\"([a-z]*)\">';
+	$api['pingfm']['ok'] = 'OK';
 
 	// Uncomment the services you want to post to
 	#$post_to[] = 'qaiku';
@@ -73,7 +75,7 @@ if ($_REQUEST['action'] == 'send')
 			curl_setopt($curl, CURLOPT_USERPWD, $api[$this_api]['username'] . ":" . $api[$this_api]['password']);
 		}
 
-		$output[$this_api] = curl_exec($curl);
+		$api[$this_api]['output'] = curl_exec($curl);
 
 		curl_close($curl);
 	}
@@ -82,7 +84,7 @@ if ($_REQUEST['action'] == 'send')
 ?>
 <html>
 <head>
-<title>Multipost</title>
+<title>PingMicro</title>
 </head>
 <body>
 
@@ -90,18 +92,36 @@ if ($_REQUEST['action'] == 'send')
 if ($_REQUEST['action'] == 'send')
 {
 	echo "<p>Results</p>";
+	echo "<ul>\n";
 
-	foreach ($output as $this_output)
+	foreach($post_to as $this_api)
 	{
-		echo "<p><pre>" . $this_output . "</pre></p>\n";
+		if ($api[$this_api]['regex'] != null)
+		{
+			eregi($api[$this_api]['regex'], $api[$this_api]['output'], $regexResult);
+			if (strtolower($regexResult[1]) == strtolower($api[$this_api]['ok']))
+			{
+				$api[$this_api]['output'] = 'Success';
+			}
+//			else
+//			{
+//				$api[$this_api]['output'] = 'Failed';
+//			}
+		}
+
+		echo "<li>" . $this_api . ": " . $api[$this_api]['output'] . "</li>\n";
 	}
+
+	echo "</ul>\n";
 }
 ?>
 
 <form method="post">
-<label for="status">Status</label>: <input type="text" id="status" name="status" />
-<input type="submit" id="action" name="action" value="send" />
-<label for="lang">Lang</label>: <input type="text" id="lang" name="lang" value="en">
+<label id="statuslabel" for="status">Status</label>: 
+<textarea style="width:100%" rows="3" id="status" name="status" onchange="document.getElementById('statuslabel').innerHTML='Status (' + document.getElementById('status').value.length + ')'">
+</textarea>
+<input style="width:100%" type="submit" id="action" name="action" value="send" />
+<input style="width:100%" type="text" id="lang" name="lang" value="en">
 </form>
 
 </body>
