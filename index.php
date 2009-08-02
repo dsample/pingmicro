@@ -108,7 +108,7 @@ if ($_REQUEST['action'] == 'send')
 //			}
 		}
 
-		echo "<li>" . $this_api . ": " . $api[$this_api]['output'] . "</li>\n";
+		echo "<li>" . $this_api . ": " . htmlentities($api[$this_api]['output']) . "</li>\n";
 	}
 
 	echo "</ul>\n";
