@@ -43,14 +43,13 @@ if ($_REQUEST['action'] == 'send')
 
 	foreach($post_to as $this_api)
 	{
-		$get = str_replace('{status}',$_REQUEST['status'],$api[$this_api]['get']);
+		$get = str_replace('{status}',urlencode(stripslashes($_REQUEST['status'])),$api[$this_api]['get']);
 		$get = str_replace('{lang}',$_REQUEST['lang'],$get);
 		if ($api[$this_api]['post'] != null)
 		{
-			$post = str_replace('{status}',$_REQUEST['status'],$api[$this_api]['post']);
+			$post = str_replace('{status}',urlencode(stripslashes($_REQUEST['status'])),$api[$this_api]['post']);
 			$post = str_replace('{lang}',$_REQUEST['lang'],$post);
 			//$post = urlencode($post);
-			echo "posting: " . $post;
 		}
 		else
 		{
