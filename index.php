@@ -49,7 +49,7 @@ if ($_REQUEST['action'] == 'send')
 	// 'combo' for combobox
 	// 'input' for an input box (this gives you the option to type your own language, but defaults to the first language option specified above)
 	// 'hidden' uses the first option specified above as a hidden field, invisibly defining every post as that language without a visual display
-	$lang_options_visual = 'radio'
+	$lang_options_visual = 'radio';
 
 	foreach($post_to as $this_api)
 	{
