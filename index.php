@@ -41,6 +41,16 @@ if ($_REQUEST['action'] == 'send')
 	#$post_to[] = 'identica';
 	#$post_to[] = 'pingfm';
 
+	$lang_options[] = 'en';
+	$lang_options[] = 'fi';
+
+	// Choices for visualisation of the language options are:
+	// 'radio' for radio buttons
+	// 'combo' for combobox
+	// 'input' for an input box (this gives you the option to type your own language, but defaults to the first language option specified above)
+	// 'hidden' uses the first option specified above as a hidden field, invisibly defining every post as that language without a visual display
+	$lang_options_visual = 'radio'
+
 	foreach($post_to as $this_api)
 	{
 		$get = str_replace('{status}',urlencode(stripslashes($_REQUEST['status'])),$api[$this_api]['get']);
@@ -120,7 +130,33 @@ if ($_REQUEST['action'] == 'send')
 <textarea style="width:100%" rows="3" id="status" name="status" onchange="document.getElementById('statuslabel').innerHTML='Status (' + document.getElementById('status').value.length + ')'">
 </textarea>
 <input style="width:100%" type="submit" id="action" name="action" value="send" />
-<input style="width:100%" type="text" id="lang" name="lang" value="en">
+
+<?php
+switch ()
+{
+	case 'radio':
+		foreach ($lang_options as $lang)
+		{
+			echo '<input type="radio" name="lang" id="lang_' . $lang . '" /><label>' . $lang . '</label>';
+		}
+	break;
+	case 'combo':
+		echo '<select name="lang" id="lang">';
+		foreach ($lang_options as $lang)
+		{
+			echo '<option value="' . $lang . '">' . $lang . '</option>';
+		}
+		echo '</select>';
+	break;
+	case 'hidden':
+		echo '<input type="hidden" name="lang" value="' . $lang_options[0] . '" />';
+	break;
+	case 'text':
+	default:
+		echo '<input style="width:100%" type="text" id="lang" name="lang" value="' . $lang_options[0] . '" />';
+	break;
+}
+?>
 </form>
 
 </body>
