@@ -4,7 +4,7 @@ if ($_REQUEST['action'] == 'send')
 {
 	// Replace YOURAPIKEY with your API key from http://www.qaiku.com/settings/api/
 	$api['qaiku']['get'] = "http://www.qaiku.com/api/statuses/update.xml?apikey=YOURAPIKEY";
-	$api['qaiku']['post'] = "status={status}&lang={lang}";
+	$api['qaiku']['post'] = "source=PingMicro&status={status}&lang={lang}";
 	$api['qaiku']['regex'] = '<(status)>';
 	$api['qaiku']['ok'] = 'status';
 
