@@ -1,5 +1,15 @@
 <?php
 
+// Set language options
+// Choices for visualisation of the language options are:
+// 'radio' for radio buttons
+// 'combo' for combobox
+// 'input' for an input box (this gives you the option to type your own language, but defaults to the first language option specified above)
+// 'hidden' uses the first option specified above as a hidden field, invisibly defining every post as that language without a visual display
+$lang_options_visual = 'radio';
+$lang_options[] = 'en';
+$lang_options[] = 'fi';
+
 if ($_REQUEST['action'] == 'send')
 {
 	// Replace YOURAPIKEY with your API key from http://www.qaiku.com/settings/api/
@@ -35,21 +45,11 @@ if ($_REQUEST['action'] == 'send')
 	$api['pingfm']['ok'] = 'OK';
 
 	// Uncomment the services you want to post to
-	#$post_to[] = 'qaiku';
-	#$post_to[] = 'jaiku';
-	#$post_to[] = 'twitter';
-	#$post_to[] = 'identica';
-	#$post_to[] = 'pingfm';
-
-	$lang_options[] = 'en';
-	$lang_options[] = 'fi';
-
-	// Choices for visualisation of the language options are:
-	// 'radio' for radio buttons
-	// 'combo' for combobox
-	// 'input' for an input box (this gives you the option to type your own language, but defaults to the first language option specified above)
-	// 'hidden' uses the first option specified above as a hidden field, invisibly defining every post as that language without a visual display
-	$lang_options_visual = 'radio';
+	//$post_to[] = 'qaiku';
+	//$post_to[] = 'jaiku';
+	//$post_to[] = 'twitter';
+	//$post_to[] = 'identica';
+	//$post_to[] = 'pingfm';
 
 	foreach($post_to as $this_api)
 	{
@@ -132,7 +132,8 @@ if ($_REQUEST['action'] == 'send')
 <input style="width:100%" type="submit" id="action" name="action" value="send" />
 
 <?php
-switch ()
+
+switch ( $lang_options_visual )
 {
 	case 'radio':
 		foreach ($lang_options as $lang)
