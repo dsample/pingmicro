@@ -45,11 +45,11 @@ if ($_REQUEST['action'] == 'send')
 	$api['pingfm']['ok'] = 'OK';
 
 	// Uncomment the services you want to post to
-	//$post_to[] = 'qaiku';
-	//$post_to[] = 'jaiku';
-	//$post_to[] = 'twitter';
-	//$post_to[] = 'identica';
-	//$post_to[] = 'pingfm';
+	#$post_to[] = 'qaiku';
+	#$post_to[] = 'jaiku';
+	#$post_to[] = 'twitter';
+	#$post_to[] = 'identica';
+	#$post_to[] = 'pingfm';
 
 	foreach($post_to as $this_api)
 	{
